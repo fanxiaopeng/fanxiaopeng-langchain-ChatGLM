@@ -1,6 +1,7 @@
 import gradio as gr
 import os
 import shutil
+from models import ChatGLM130B
 
 from chains.local_doc_qa import LocalDocQA
 from configs.model_config import *
@@ -37,6 +38,8 @@ flag_csv_logger = gr.CSVLogger()
 def get_answer(query, vs_path, history, mode, score_threshold=VECTOR_SEARCH_SCORE_THRESHOLD,
                vector_search_top_k=VECTOR_SEARCH_TOP_K, chunk_conent: bool = True,
                chunk_size=CHUNK_SIZE, streaming: bool = STREAMING):
+    print("---------------get_answer mode: "+mode)
+    print("---------------get_answer history: ",history)
     if mode == "Bing搜索问答":
         for resp, history in local_doc_qa.get_search_result_based_answer(
                 query=query, chat_history=history, streaming=streaming):
@@ -87,11 +90,17 @@ def get_answer(query, vs_path, history, mode, score_threshold=VECTOR_SEARCH_SCOR
             yield history + [[query,
                               "请选择知识库后进行测试，当前未选择知识库。"]], ""
     else:
+        print("---------------mode: else")
+        # llm = ChatGLM130B()
+        print("else history: ", history)
+        print("else history[:-1]: ", history[:-1])
         for answer_result in local_doc_qa.llm.generatorAnswer(prompt=query, history=history[:-1],
                                                               streaming=streaming):
             resp = answer_result.llm_output["answer"]
-            history = answer_result.history
-            history[-1][-1] = resp
+            print("resp:", resp)
+            history.append([query, resp])
+            # history = answer_result.history
+            # history[-1][-1] = resp
             yield history, ""
     logger.info(f"flagging: username={FLAG_USER_NAME},query={query},vs_path={vs_path},mode={mode},history={history}")
     flag_csv_logger.flag([query, vs_path, history, mode], username=FLAG_USER_NAME)
@@ -263,7 +272,6 @@ block_css = """.importantButton {
 
 webui_title = """
 # 🎉langchain-ChatGLM WebUI🎉
-👍 [https://github.com/imClumsyPanda/langchain-ChatGLM](https://github.com/imClumsyPanda/langchain-ChatGLM)
 """
 default_vs = get_vs_list()[0] if len(get_vs_list()) > 1 else "为空"
 init_message = f"""欢迎使用 langchain-ChatGLM Web UI！
@@ -297,7 +305,7 @@ with gr.Blocks(css=block_css, theme=gr.themes.Default(**default_theme_args)) as 
                 query = gr.Textbox(show_label=False,
                                    placeholder="请输入提问内容，按回车进行提交").style(container=False)
             with gr.Column(scale=5):
-                mode = gr.Radio(["LLM 对话", "知识库问答", "Bing搜索问答"],
+                mode = gr.Radio(["知识库问答"],
                                 label="请选择使用模式",
                                 value="知识库问答", )
                 knowledge_set = gr.Accordion("知识库设定", visible=False)
@@ -501,7 +509,7 @@ with gr.Blocks(css=block_css, theme=gr.themes.Default(**default_theme_args)) as 
 (demo
  .queue(concurrency_count=3)
  .launch(server_name='0.0.0.0',
-         server_port=7860,
+         server_port=6006,
          show_api=False,
          share=False,
          inbrowser=False))

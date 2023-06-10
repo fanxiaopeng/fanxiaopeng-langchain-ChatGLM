@@ -3,6 +3,8 @@ from langchain.vectorstores import FAISS
 from langchain.document_loaders import UnstructuredFileLoader, TextLoader
 from configs.model_config import *
 import datetime
+
+from models import ChatGLM130B
 from textsplitter import ChineseTextSplitter
 from typing import List, Tuple, Dict
 from langchain.docstore.document import Document
@@ -299,7 +301,7 @@ class LocalDocQA:
         related_docs_with_score = vector_store.similarity_search_with_score(query, k=self.top_k)
         torch_gc()
         prompt = generate_prompt(related_docs_with_score, query)
-
+        print("get_knowledge_based_answer:")
         for answer_result in self.llm.generatorAnswer(prompt=prompt, history=chat_history,
                                                       streaming=streaming):
             resp = answer_result.llm_output["answer"]

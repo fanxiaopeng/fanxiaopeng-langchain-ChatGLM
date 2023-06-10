@@ -1,0 +1,7 @@
+cd /root/langchain-ChatGLM/
+
+conda activate /root/pyenv
+
+python webui.py --model-dir /root/autodl-tmp/model --model chatglm-6b --no-remote-model
+
+python webui.py --model-dir /root/autodl-tmp/model --model chatglm-130b --no-remote-model
