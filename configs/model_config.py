@@ -95,6 +95,20 @@ llm_model_dict = {
         "provides": "ChatGLM130B",  # 使用fastchat api时，需保证"provides"为"FastChatOpenAILLM"
         "api_base_url": "http://localhost:8000/v1"  # "name"修改为fastchat服务中的"api_base_url"
     },
+    "azure": {
+        "name": "chatglm-6b",  # "name"修改为fastchat服务中的"model_name"
+        "pretrained_model_name": "chatglm-6b",
+        "local_model_path": None,
+        "provides": "Azure",  # 使用fastchat api时，需保证"provides"为"FastChatOpenAILLM"
+        "api_base_url": "http://localhost:8000/v1"  # "name"修改为fastchat服务中的"api_base_url"
+    },
+    "chatgpt": {
+        "name": "chatglm-6b",  # "name"修改为fastchat服务中的"model_name"
+        "pretrained_model_name": "chatglm-6b",
+        "local_model_path": None,
+        "provides": "Chatgpt",  # 使用fastchat api时，需保证"provides"为"FastChatOpenAILLM"
+        "api_base_url": "http://localhost:8000/v1"  # "name"修改为fastchat服务中的"api_base_url"
+    },
 }
 
 # LLM 名称
