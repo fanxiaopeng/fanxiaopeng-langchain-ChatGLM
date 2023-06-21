@@ -171,7 +171,11 @@ def similarity_search_with_score_by_vector(
                 doc.page_content += " " + doc0.page_content
         if not isinstance(doc, Document):
             raise ValueError(f"Could not find document for id {_id}, got {doc}")
-        doc_score = min([scores[0][id] for id in [indices[0].tolist().index(i) for i in id_seq if i in indices[0]]])
+        result = [scores[0][id] for id in [indices[0].tolist().index(i) for i in id_seq if i in indices[0]]]
+        if len(result) > 0:
+            doc_score = min(result)
+        else:
+            doc_score = "0"
         doc.metadata["score"] = int(doc_score)
         docs.append(doc)
     torch_gc()

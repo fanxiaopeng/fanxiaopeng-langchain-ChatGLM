@@ -39,7 +39,7 @@ class ChatGLM130B(RemoteRpcModel, LLM, ABC):
     #     token = token_result["data"]
     # else:
     #     print("获取 token 失败，请检查 API_KEY 和 PUBLIC_KEY")
-    token = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX3R5cGUiOiJTRVJWSUNFIiwidXNlcl9pZCI6MTMzOTg3LCJhcGlfa2V5IjoiNDNjY2YxZDQxNjA4NDQ5N2E4ZTY1YWU0Njc4OGExZmEiLCJ1c2VyX2tleSI6IjBjYmJlMzkyLTUwZDMtNDFjYi1iMzk3LTRjNTE1OThiYzcxNiIsImN1c3RvbWVyX2lkIjoiNzYyNTU0NTkzMzkwODk0NDU1OSIsInVzZXJuYW1lIjoiMTg2NTg4NjYzMjgifQ.jxIw20jUxwV65DUmWrfmKMuKX-5kS70YbQAYWT8x4trveEt94GWtRCzwZ0YF9yVXqyVY3f44VnzDWMucCzK65w'
+    token = 'eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX3R5cGUiOiJTRVJWSUNFIiwidXNlcl9pZCI6MTMzOTg3LCJhcGlfa2V5IjoiNDNjY2YxZDQxNjA4NDQ5N2E4ZTY1YWU0Njc4OGExZmEiLCJ1c2VyX2tleSI6ImYwZmU2MGQ4LWM2MmUtNGNkNi1iOWY0LTY1MGI4ODE5NWY5NiIsImN1c3RvbWVyX2lkIjoiNzYyNTU0NTkzMzkwODk0NDU1OSIsInVzZXJuYW1lIjoiMTg2NTg4NjYzMjgifQ.Njs8ev8QD-GjaZ5Pf4E97I2jhd9P9yb7OJMFny0vfdi4tDgDiazvWUkNaDMgvIVbnv4WUUTBfrrDuUYKEEvuew'
     model_name: str = "chatglm-6b"
     temperature: float = 0.9
     top_p = 0.7
